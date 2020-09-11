@@ -1,36 +1,56 @@
-import React from "react";
-import { Navigation } from "components";
+import React, { Fragment } from "react";
+import { Navigation, Wrapper, LoadingIndicator } from "components";
 import { ThemeProvider } from "styled-components";
 import GlobalStyles from "./index.css";
 import theme from "utils/theme";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 function App() {
+  const { t, i18n } = useTranslation();
+
   return (
-    <ThemeProvider theme={theme}>
+    <Fragment>
       <GlobalStyles />
       <Router>
         <Navigation
           items={[
             {
-              content: "Homepage",
+              content: t("Homepage"),
               to: "/",
             },
             {
-              content: "Budget",
+              content: t("Budget"),
               to: "/budget",
             },
           ]}
+          RightElement={
+            <div>
+              <button onClick={() => i18n.changeLanguage("pl")}>pl</button>
+              <button onClick={() => i18n.changeLanguage("en")}>en</button>
+            </div>
+          }
         />
-        <Switch>
-          <Route exact path="/">
-            Homepage
-          </Route>
-          <Route path="/budget">Budget</Route>
-        </Switch>
+        <Wrapper>
+          <Switch>
+            <Route exact path="/">
+              Homepage
+            </Route>
+            <Route path="/budget">Budget</Route>
+          </Switch>
+        </Wrapper>
       </Router>
-    </ThemeProvider>
+    </Fragment>
   );
 }
+const RootApp = () => {
+  return (
+    <ThemeProvider theme={theme}>
+      <React.Suspense fallback={<LoadingIndicator />}>
+        <App />
+      </React.Suspense>
+    </ThemeProvider>
+  );
+};
 
-export default App;
+export default RootApp;
