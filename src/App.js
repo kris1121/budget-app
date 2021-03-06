@@ -1,5 +1,11 @@
 import React, { Fragment } from "react";
-import { Navigation, Wrapper, LoadingIndicator } from "components";
+import {
+  Navigation,
+  Wrapper,
+  LoadingIndicator,
+  Button,
+  HomePage,
+} from "components";
 import { ThemeProvider } from "styled-components";
 import GlobalStyles from "./index.css";
 import theme from "utils/theme";
@@ -26,15 +32,25 @@ function App() {
           ]}
           RightElement={
             <div>
-              <button onClick={() => i18n.changeLanguage("pl")}>pl</button>
-              <button onClick={() => i18n.changeLanguage("en")}>en</button>
+              <Button
+                variant="regular"
+                onClick={() => i18n.changeLanguage("pl")}
+              >
+                pl
+              </Button>
+              <Button
+                variant="regular"
+                onClick={() => i18n.changeLanguage("en")}
+              >
+                en
+              </Button>
             </div>
           }
         />
         <Wrapper>
           <Switch>
             <Route exact path="/">
-              Homepage
+              <HomePage />
             </Route>
             <Route path="/budget">Budget</Route>
           </Switch>
